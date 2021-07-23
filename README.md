@@ -1,10 +1,29 @@
-# Getting Started with Create React App
+# TP Integrador React Grupo 4
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Enunciado
+
+Se trata de un proyecto de desarrollo frontend en React, utilizando como servidor, el tp desarrollado en NodeJs para los modulos 3 y 4. Deben realizar un frontend para mostrar e ingresar todos las consultas que su servidor NodeJs ofrece.
+
+- Persona
+  Formulario para ingresar una nueva persona (amigos a los que les prestare libros)
+
+  Un listado o cards desde el que se puedan ver todas las personas y tenga funcion para borrar y modificar sus datos (pueden ser iconos o botones)
+
+  Se tiene que poder ver los libros que tiene una persona prestados (es decir, los libros que le preste)
+
+- Generos
+  Formulario para ingresar un nuevo genero
+
+  Un listado o cards de generos donde tambien se cuente con la funcionlidad de borrado o modificacion
+
+  Se tiene que poder ver todos los libros de un genero, puede ser una funcionalidad extra en el listado/card del punto anterior o bien otra pantalla donde se seleccione el genero y muestren los libros
+
+- Libro
+  Formulario para ingresar nuevo libro
+
+  Listado de todos los libros que muestre el alias de la persona que lo tiene, en caso de estar prestado, debe contar con boton para borrar, modificar, prestar/devolver libro
 
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
@@ -28,43 +47,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
