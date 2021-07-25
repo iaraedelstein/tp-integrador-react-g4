@@ -16,11 +16,11 @@ export default function CategoriaList() {
 
   return (
     <div className="categories">
-      <h1>Categorías</h1>
+      <h1 className="categories-title">Categorías</h1>
       {categories.map((cat) => {
         return (
           <div className="category-wrapper" key={cat.id}>
-            <p className="category--name">{cat.nombre}</p>
+            <p className="category-name">{cat.nombre}</p>
           </div>
         );
       })}
