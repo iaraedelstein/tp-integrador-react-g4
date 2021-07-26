@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getPersonas } from '../../services/personService';
-//import { useDispatch, useSelector} from 'react-redux';
+import { deletePersona, getPersonas } from '../../services/personService';
+import { Link } from 'react-router-dom';
 
 export default function PersonaList() {
   const [personas, setPersonas] = useState([]);
 
   const fetchData = async () => {
-    const personas = await getPersonas();
-    setPersonas(personas);
+    try {
+      const personas = await getPersonas();
+      setPersonas(personas);
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -17,16 +19,36 @@ export default function PersonaList() {
   return (
     <div className="personas">
       <h1 className="personas-title"> Personas </h1>
-      {personas.map((person) => {
-        return (
-          <div className="personas-wrapper" key={person.id}>
-            <p className="personas-info"> {person.nombre} </p>
-            <p className="personas-info"> {person.apellido} </p>
-            <p className="personas-info"> {person.email} </p>
-            <p className="personas-info"> {person.alias} </p>
-          </div>
-        );
-      })}
+      <div>
+        <Link to={'/personas/new'}>Nueva Persona</Link>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>Alias</th>
+            </tr>
+          </thead>
+          <tbody>
+            {personas.map((person) => (
+              <tr className="personas-wrapper" key={person.id}>
+                <td className="personas-info"> {person.nombre} </td>
+                <td className="personas-info"> {person.apellido} </td>
+                <td className="personas-info"> {person.email} </td>
+                <td className="personas-info"> {person.alias} </td>
+                <td>
+                  <Link to={'/personas/:id/edit' + person.id.toString()}>
+                    Editar
+                  </Link>
+                  <Link onClick={() => deletePersona(person.id)}>Borrar</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

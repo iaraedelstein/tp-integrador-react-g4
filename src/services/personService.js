@@ -25,3 +25,13 @@ export const createPersona = async (nombre, apellido, email, alias) => {
     return error;
   }
 };
+
+export const deletePersona = async (id) => {
+  try {
+    const respuesta = await axios.delete(`${baseUrl}/persona/${id}`);
+    return respuesta.data;
+  } catch (error) {
+    console.log(`Error deleting persona ${id}`);
+    return error;
+  }
+};
