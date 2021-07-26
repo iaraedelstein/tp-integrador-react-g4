@@ -3,12 +3,14 @@ import { createPersona } from '../../services/personService';
 //import { useDispatch, useSelector} from 'react-redux';
 
 export default function PersonaForm() {
-    const [persona, setPersona] = useState([]);
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [email, setEmail] = useState('');
+  const [alias, setAlias] = useState('');
 
-    const createPersona = async(nombre, apellido, email, alias) => {
-        const persona = await createPersona(nombre, apellido, email, alias);
-        setPersona(persona);
-    };
+  const createPersona = async () => {
+    await createPersona(nombre, apellido, email, alias);
+  };
 
-    return <> </>;
+  return <> </>;
 }
