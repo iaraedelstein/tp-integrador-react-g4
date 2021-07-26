@@ -1,0 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.main-cont{
+    display: flex;
+    flex-direction: column;
+}
+.cards-cont{
+    display: flex;
+    justify-content: space-around;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 300px;
+    height: 200px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 30px;
+}
