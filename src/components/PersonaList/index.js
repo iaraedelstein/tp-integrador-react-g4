@@ -3,7 +3,7 @@ import { deletePersona, getPersonas } from '../../services/personService';
 import { Link } from 'react-router-dom';
 import './index.css';
 
-export default function PersonaList() {
+export default function PersonaList(props) {
   const [personas, setPersonas] = useState([]);
 
   const fetchData = async () => {
@@ -18,7 +18,7 @@ export default function PersonaList() {
   }, []);
 
   return (
-    <div className="personas">
+    <div className="personas container-fluid">
       <h1 className="personas-title"> Personas </h1>
       <div>
         <table>
@@ -29,7 +29,7 @@ export default function PersonaList() {
               <th>Apellido</th>
               <th>Email</th>
               <th>Alias</th>
-              <th></th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -41,7 +41,10 @@ export default function PersonaList() {
                 <td className="personas-info"> {person.email} </td>
                 <td className="personas-info"> {person.alias} </td>
                 <td>
-                  <Link class="link" to={'/personas/:id/edit' + person.id.toString()}>
+                  <Link
+                    class="link"
+                    to={'/personas/:id/edit' + person.id.toString()}
+                  >
                     Editar
                   </Link>
                   <Link onClick={() => deletePersona(person.id)}>Borrar</Link>

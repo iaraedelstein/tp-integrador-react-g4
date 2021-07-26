@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { createCategory } from '../../services/categoryService';
+import Button from 'react-bootstrap/Button';
 //import { useDispatch, useSelector} from 'react-redux';
 
 export default function CategoriaForm(props) {
   const [nombre, setNombre] = useState([]);
 
-  const handleChangeNombre = (name) => {
-    setNombre(name);
+  const handleChangeNombre = (e) => {
+    const newNombre = e.target.value;
+    setNombre(newNombre);
   };
 
-  const createCategory = async (name) => {
-    await createCategory(name);
+  const save = async () => {
+    await createCategory(nombre);
     props.history.push('/categoria');
   };
 
   return (
-    <div>
+    <div className="container-fluid categories">
       <label>nombre</label>
       <input
         type="text"
         name="nombre"
         placeholder="nombre"
         value={nombre}
-        onChange={(e) => handleChangeNombre(e.target.value)}
+        onChange={handleChangeNombre}
       />
-      <button type="submit" onClick={createCategory()}>
+      <Button type="submit" onClick={save}>
         Guardar
-      </button>
+      </Button>
     </div>
   );
 }

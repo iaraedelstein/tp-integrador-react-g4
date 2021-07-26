@@ -35,7 +35,7 @@ export default function PersonaForm(props) {
   };
 
   return (
-    <div class="container">
+    <div class="container-fluid">
       <div class="form">
         <div class="header">
           <h1>Agregar persona</h1>
@@ -58,23 +58,22 @@ export default function PersonaForm(props) {
         </div>
         <div class="input-cont2">
           <input
-              type="text"
-              name="alias"
-              placeholder="alias"
-              value={alias}
-              onChange={handleChangeAlias}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="email"
-              value={email}
-              onChange={handleChangeEmail}
-            />
+            type="text"
+            name="alias"
+            placeholder="alias"
+            value={alias}
+            onChange={handleChangeAlias}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="email"
+            value={email}
+            onChange={handleChangeEmail}
+          />
         </div>
-        <button onClick={createPerson}>Save</button>
+        <button onClick={createPerson}>Guardar</button>
       </div>
-
     </div>
   );
 }
