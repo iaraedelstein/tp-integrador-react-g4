@@ -17,16 +17,16 @@ export default function PersonaList() {
   return (
     <div className="personas">
       <h1 className="personas-title"> Personas </h1>
-      {personas.map((per) => {
+      {personas.map((person) => {
         return (
-          <div className="personas-wrapper" key={per.id}>
-            <p className="personas-info"> {per.nombre} </p>
-            <p className="personas-info"> {per.apellido} </p>
-            <p className="personas-info"> {per.email} </p>
-            <p className="personas-info"> {per.alias} </p>
+          <div className="personas-wrapper" key={person.id}>
+            <p className="personas-info"> {person.nombre} </p>
+            <p className="personas-info"> {person.apellido} </p>
+            <p className="personas-info"> {person.email} </p>
+            <p className="personas-info"> {person.alias} </p>
           </div>
         );
-      })}{' '}
+      })}
     </div>
   );
 }
