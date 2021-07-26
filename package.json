@@ -41,18 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "description": "Se trata de un proyecto de desarrollo frontend en React, utilizando como servidor, el tp desarrollado en NodeJs para los modulos 3 y 4. Deben realizar un frontend para mostrar e ingresar todos las consultas que su servidor NodeJs ofrece.",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iaraedelstein/tp-integrador-react-g4.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iaraedelstein/tp-integrador-react-g4/issues"
-  },
-  "homepage": "https://github.com/iaraedelstein/tp-integrador-react-g4#readme",
-  "devDependencies": {}
+  }
 }
