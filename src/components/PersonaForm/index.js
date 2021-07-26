@@ -63,7 +63,7 @@ export default function PersonaForm(props) {
         value={email}
         onChange={handleChangeEmail}
       />
-      <button onClick={createPerson}>Save</button>
+      <button onClick={createPerson}>Guardar</button>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import CategoriaForm from './components/CategoriaForm';
 /*import LibrosList from './components/LibrosList';
 import LibroForm from './components/LibroForm'; */
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

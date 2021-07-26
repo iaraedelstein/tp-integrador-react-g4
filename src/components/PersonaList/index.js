@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { deletePersona, getPersonas } from '../../services/personService';
 import { Link } from 'react-router-dom';
 
-export default function PersonaList() {
+export default function PersonaList(props) {
   const [personas, setPersonas] = useState([]);
 
   const fetchData = async () => {
@@ -20,7 +20,7 @@ export default function PersonaList() {
     <div className="personas">
       <h1 className="personas-title"> Personas </h1>
       <div>
-        <Link to={'/personas/new'}>Nueva Persona</Link>
+        <Link to={'/persona/new'}>Nueva Persona</Link>
         <table>
           <thead>
             <tr>
