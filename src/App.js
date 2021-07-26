@@ -1,29 +1,28 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/Home';
-/* import PersonaList from './components/PersonaList';
+import PersonaList from './components/PersonaList';
 import PersonaForm from './components/PersonaForm';
-import PersonaLibros from './components/PersonaLibros'; */
+/*import PersonaLibros from './components/PersonaLibros'; */
 import CategoriaList from './components/CategoriaList';
-/* import CategoriaForm from './components/CategoriaForm';
-import CategoriaLibros from './components/CategoriaLibros';
-import LibrosList from './components/LibrosList';
+import CategoriaForm from './components/CategoriaForm';
+/*import LibrosList from './components/LibrosList';
 import LibroForm from './components/LibroForm'; */
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/persona" component={PersonaList} />
+        <Route exact path="/persona" component={PersonaList} />
         <Route exact path="/persona/new" component={PersonaForm} />
-        <Route exact path="/persona/:id/libros" component={PersonaLibros} /> */}
+        {/* <Route exact path="/persona/:id/libros" component={PersonaLibros} /> */}
         <Route exact path="/categoria" component={CategoriaList} />
-        {/* <Route exact path="/categoria/new" component={CategoriaForm} />
-        <Route exact path="/categoria/:id/libros" component={CategoriaLibros} />
-        <Route exact path="/libro" component={LibrosList} />
-        <Route exact path="/libro/new" component={LibroForm} /> */}
+        <Route exact path="/categoria/new" component={CategoriaForm} />
+        {/* < Route exact path = "/libro" component = { LibrosList } />
+            < Route exact path = "/libro/new" component = { LibroForm } /> */}
       </Router>
     </div>
   );
