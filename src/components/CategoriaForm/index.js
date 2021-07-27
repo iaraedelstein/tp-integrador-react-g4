@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createCategory } from '../../services/categoryService';
 import Button from 'react-bootstrap/Button';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 //import { useDispatch, useSelector} from 'react-redux';
 
 export default function CategoriaForm(props) {
@@ -17,18 +18,34 @@ export default function CategoriaForm(props) {
   };
 
   return (
-    <div className="container-fluid categories">
-      <label>nombre</label>
-      <input
-        type="text"
-        name="nombre"
-        placeholder="nombre"
-        value={nombre}
-        onChange={handleChangeNombre}
-      />
-      <Button type="submit" onClick={save}>
-        Guardar
-      </Button>
-    </div>
+    <Container className="categories">
+      <Row>
+        <Col>
+          <h1 className="title">Nueva Categoría</h1>
+        </Col>
+      </Row>
+
+      <Form>
+        <Row className="align-items-end">
+          <Col xs="auto">
+            <Form.Group>
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
+                name="nombre"
+                placeholder="nombre"
+                value={nombre}
+                onChange={handleChangeNombre}
+              />
+            </Form.Group>
+          </Col>
+          <Col xs="auto">
+            <Button type="submit" onClick={save}>
+              Guardar
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    </Container>
   );
 }

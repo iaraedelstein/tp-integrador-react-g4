@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Table } from 'react-bootstrap';
 import { getLibrosByCategory } from '../../services/categoryService';
 //import { useDispatch, useSelector} from 'react-redux';
 
@@ -17,10 +18,10 @@ export default function CategoriaLibros(props) {
 
   return (
     <div className="container-fluid books">
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Persona</th>
@@ -35,7 +36,7 @@ export default function CategoriaLibros(props) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }
