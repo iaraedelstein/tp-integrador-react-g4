@@ -8,6 +8,7 @@ import './styles.css';
 
 export default function CategoriaList(props) {
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState();
 
   const fetchData = async () => {
     const categories = await getCategories();
@@ -37,11 +38,16 @@ export default function CategoriaList(props) {
         {categories.map((cat) => {
           return (
             <div className="category-wrapper" key={cat.id}>
-              <p className="category-info">{cat.nombre}</p>
+              <button
+                className="category-info"
+                onClick={() => setCategory(cat.id)}
+              >
+                {cat.nombre}
+              </button>
             </div>
           );
         })}
-        {/* <CategoriaLibros id="1" /> */}
+        {category && <CategoriaLibros id={category} />}
       </div>
     </Container>
   );

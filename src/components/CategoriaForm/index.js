@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { createCategory } from '../../services/categoryService';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Form, Row } from 'react-bootstrap';
-//import { useDispatch, useSelector} from 'react-redux';
 
 export default function CategoriaForm(props) {
   const [nombre, setNombre] = useState([]);
@@ -12,8 +11,9 @@ export default function CategoriaForm(props) {
     setNombre(newNombre);
   };
 
-  const save = async () => {
-    await createCategory(nombre);
+  const handleSubmit = async (event) => {
+    //TODO revisar que es async
+    createCategory(nombre);
     props.history.push('/categoria');
   };
 
@@ -40,7 +40,7 @@ export default function CategoriaForm(props) {
             </Form.Group>
           </Col>
           <Col xs="auto">
-            <Button type="submit" onClick={save}>
+            <Button type="submit" onClick={handleSubmit}>
               Guardar
             </Button>
           </Col>

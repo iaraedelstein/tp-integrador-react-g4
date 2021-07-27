@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { createPersona } from '../../services/personService';
 import './styles.css';
-//import { useDispatch, useSelector} from 'react-redux';
 
 export default function PersonaForm(props) {
   const [nombre, setNombre] = useState('');
