@@ -16,10 +16,8 @@ export const getLibro = async (id) => {
   return respuesta.data;
 };
 
-export const createLibro = async (name) => {
-  const respuesta = await axios.post(`${baseUrl}/libro`, {
-    nombre: name,
-  });
+export const createLibro = async (libro) => {
+  const respuesta = await axios.post(`${baseUrl}/libro`, libro);
   return respuesta.data;
 };
 
