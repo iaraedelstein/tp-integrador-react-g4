@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -21,17 +21,32 @@
   justify-content: flex-end;
 }
 
-.category-info {
+.category-wrapper {
   margin-bottom: 40px;
-  width: 240px;
-  height: 240px;
-  line-height: 240px;
+}
+
+.category-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.category-actions__delete {
+  border: none;
+  color: red;
+  background: none;
+}
+
+.category-info {
+  width: 200px;
+  height: 200px;
+  line-height: 200px;
   border-radius: 50%;
   font-size: 24px;
   color: #fff;
   text-align: center;
   background: #cababa;
   text-transform: uppercase;
+  border: none;
 }
 
 .category-info:hover {

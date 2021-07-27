@@ -42,7 +42,7 @@ export default function PersonaList(props) {
                 <td className="personas-info"> {person.alias} </td>
                 <td>
                   <Link
-                    class="link"
+                    className="link"
                     to={'/personas/:id/edit' + person.id.toString()}
                   >
                     Editar

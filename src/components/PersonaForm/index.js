@@ -41,7 +41,7 @@ export default function PersonaForm(props) {
           <h1 className="title">Nueva Persona</h1>
         </Col>
       </Row>
-      <Form class="form">
+      <Form className="form">
         <div className="input-cont1">
           <input
             type="text"
@@ -58,7 +58,7 @@ export default function PersonaForm(props) {
             onChange={handleChangeApellido}
           />
         </div>
-        <div class="input-cont2">
+        <div className="input-cont2">
           <input
             type="text"
             name="alias"

@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../../services/categoryService';
+import { getCategories, deleteCategory } from '../../services/categoryService';
 import CategoriaLibros from '../CategoriaLibros';
 import './styles.css';
+import { FaTrash, FaPencilAlt } from 'react-icons/fa';
 //import { useDispatch, useSelector} from 'react-redux';
 
 export default function CategoriaList(props) {
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState('');
 
   const fetchData = async () => {
     const categories = await getCategories();
     setCategories(categories);
+  };
+
+  const handleDeleteCategory = async (id) => {
+    try {
+      await deleteCategory(id);
+      fetchData();
+    } catch (e) {
+      console.log(`Error deleting category ${id}`);
+      //TODO show error message
+    }
   };
 
   useEffect(() => {
@@ -44,6 +55,20 @@ export default function CategoriaList(props) {
               >
                 {cat.nombre}
               </button>
+              <div className="category-actions">
+                <Link
+                  className="link"
+                  to={`/categoria/${cat.id.toString()}/edit`}
+                >
+                  <FaPencilAlt></FaPencilAlt>
+                </Link>
+                <button
+                  className="category-actions__delete"
+                  onClick={() => handleDeleteCategory(cat.id)}
+                >
+                  <FaTrash></FaTrash>
+                </button>
+              </div>
             </div>
           );
         })}

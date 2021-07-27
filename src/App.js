@@ -21,6 +21,7 @@ function App() {
         {/* <Route exact path="/persona/:id/libros" component={PersonaLibros} /> */}
         <Route exact path="/categoria" component={CategoriaList} />
         <Route exact path="/categoria/new" component={CategoriaForm} />
+        <Route exact path="/categoria/:id/edit" component={CategoriaForm} />
         {/* < Route exact path = "/libro" component = { LibrosList } />
             < Route exact path = "/libro/new" component = { LibroForm } /> */}
       </Router>
