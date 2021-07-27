@@ -52,7 +52,6 @@ export default function LibroList(props) {
             <Card
               bg={'light'}
               key={libro.id}
-              text={'white'}
               style={{ width: '18rem' }}
               className="mb-2 libro-wrapper"
             >
