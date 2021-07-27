@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { createPersona } from '../../services/personService';
-import './index.css';
-//import { useDispatch, useSelector} from 'react-redux';
+import './styles.css';
 
 export default function PersonaForm(props) {
   const [nombre, setNombre] = useState('');
@@ -35,12 +35,14 @@ export default function PersonaForm(props) {
   };
 
   return (
-    <div class="container-fluid">
-      <div class="form">
-        <div class="header">
-          <h1>Agregar persona</h1>
-        </div>
-        <div class="input-cont1">
+    <Container>
+      <Row>
+        <Col>
+          <h1 className="title">Nueva Persona</h1>
+        </Col>
+      </Row>
+      <Form className="form">
+        <div className="input-cont1">
           <input
             type="text"
             name="nombre"
@@ -56,7 +58,7 @@ export default function PersonaForm(props) {
             onChange={handleChangeApellido}
           />
         </div>
-        <div class="input-cont2">
+        <div className="input-cont2">
           <input
             type="text"
             name="alias"
@@ -72,8 +74,8 @@ export default function PersonaForm(props) {
             onChange={handleChangeEmail}
           />
         </div>
-        <button onClick={createPerson}>Guardar</button>
-      </div>
-    </div>
+        <Button onClick={createPerson}>Guardar</Button>
+      </Form>
+    </Container>
   );
 }

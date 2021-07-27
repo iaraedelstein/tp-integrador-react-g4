@@ -6,8 +6,8 @@ import PersonaForm from './components/PersonaForm';
 /*import PersonaLibros from './components/PersonaLibros'; */
 import CategoriaList from './components/CategoriaList';
 import CategoriaForm from './components/CategoriaForm';
-/*import LibrosList from './components/LibrosList';
-import LibroForm from './components/LibroForm'; */
+import LibrosList from './components/LibrosList';
+import LibroForm from './components/LibroForm';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,8 +21,9 @@ function App() {
         {/* <Route exact path="/persona/:id/libros" component={PersonaLibros} /> */}
         <Route exact path="/categoria" component={CategoriaList} />
         <Route exact path="/categoria/new" component={CategoriaForm} />
-        {/* < Route exact path = "/libro" component = { LibrosList } />
-            < Route exact path = "/libro/new" component = { LibroForm } /> */}
+        <Route exact path="/categoria/:id/edit" component={CategoriaForm} />
+        <Route exact path="/libro" component={LibrosList} />
+        <Route exact path="/libro/new" component={LibroForm} />
       </Router>
     </div>
   );

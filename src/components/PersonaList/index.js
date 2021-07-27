@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { deletePersona, getPersonas } from '../../services/personService';
 import { Link } from 'react-router-dom';
-import './index.css';
+import './styles.css';
 
 export default function PersonaList(props) {
   const [personas, setPersonas] = useState([]);
@@ -42,7 +42,7 @@ export default function PersonaList(props) {
                 <td className="personas-info"> {person.alias} </td>
                 <td>
                   <Link
-                    class="link"
+                    className="link"
                     to={'/personas/:id/edit' + person.id.toString()}
                   >
                     Editar

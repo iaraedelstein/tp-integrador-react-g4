@@ -1,0 +1,54 @@
+.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: 400;
+  margin: 10px 0;
+  font-size: 40px;
+  text-align: center;
+  background-color: white;
+  color: grey;
+}
+.categories-list {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.btn-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.category-wrapper {
+  margin-bottom: 40px;
+}
+
+.category-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.category-actions__delete {
+  border: none;
+  color: red;
+  background: none;
+}
+
+.category-info {
+  width: 200px;
+  height: 200px;
+  line-height: 200px;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #fff;
+  text-align: center;
+  background: #cababa;
+  text-transform: uppercase;
+  border: none;
+}
+
+.category-info:hover {
+  background: #8ebfbe;
+}
