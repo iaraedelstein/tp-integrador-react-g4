@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { getCategories } from './services/categoryService';
 import { getLibros } from './services/libroService';
 import { getPersonas } from './services/personService';
+import Menu from './components/commons/Menu';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <Menu />
         <Route exact path="/" component={Home} />
         <Route exact path="/persona" component={PersonaList} />
         <Route exact path="/persona/new" component={PersonaForm} />
