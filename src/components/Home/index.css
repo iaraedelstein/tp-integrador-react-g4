@@ -1,0 +1,69 @@
+.main-cont{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.main-nav{
+    display: flex;
+    justify-content: space-around;
+    height: 10%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
+}
+.main-nav h2{
+    font-size: 25px;
+    padding: 6px;
+    color: #49628d;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.presentation{
+    background-image: url(https://www.mundarelibrary.ab.ca/public/uploads/snippets/1593454196bannerimage/1606416985-1600w_595h_1593454196bannerimage.jpg);
+    background-repeat: no-repeat;
+    background-position: contain;
+    height: 30%;
+}
+.cards-cont{
+    display: flex;
+    justify-content: center;
+    height: 40%;
+}
+.card{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+
+}
+.card h2{
+    padding: 2px;
+    color: white;
+    font-size: 20px;
+    background-color: #49628d;
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.link{
+    width: 100%;
+    height: 50%;
+    margin: auto;
+    /* border: 1px solid #00000035; */
+    transition: all .5s;
+}
+footer{
+    padding: 40px;
+    height: 20%;
+    background-color: #49628d;
+    color:white;
+}
+
+footer h3{
+    font-size: 20px;
+}
