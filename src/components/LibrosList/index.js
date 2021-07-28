@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { getLibros, deleteLibro } from '../../services/libroService';
+import { deleteLibro } from '../../services/libroService';
 import './styles.css';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
-//import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import LibroForm from '../LibroForm';
 
 export default function LibroList(props) {
-  const [libros, setLibros] = useState([]);
-  const [libroEdit, setLibroEdit] = useState();
+  const dispatch = useDispatch();
 
-  const fetchData = async () => {
-    const libros = await getLibros();
-    setLibros(libros);
-  };
+  const libros = useSelector((state) => state.libros);
+  const categorias = useSelector((state) => state.categorias);
+  const personas = useSelector((state) => state.personas);
+
+  const [libroEdit, setLibroEdit] = useState();
 
   const handleDeleteLibro = async (id) => {
     try {
       await deleteLibro(id);
-      fetchData();
+      dispatch({ type: 'DELETE', list: 'LIBRO', detail: { id } });
     } catch (e) {
       console.log(`Error deleting libro ${id}`);
       //TODO show error message
@@ -26,10 +27,6 @@ export default function LibroList(props) {
   };
 
   const handleEdit = async (libro) => {};
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <Container className="libros">
@@ -45,7 +42,6 @@ export default function LibroList(props) {
           </Link>
         </div>
       </Row>
-
       <div className="libros-list">
         {libros.map((libro) => {
           return (

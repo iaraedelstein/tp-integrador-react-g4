@@ -1,0 +1,25 @@
+.libros-form {
+  max-width: 800px;
+  width: 100%;
+}
+
+.libros-form-group {
+  margin-bottom: 20px;
+}
+
+.btn-form-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.btn-form-actions .btn {
+  margin-right: 10px;
+}
+
+.libros-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

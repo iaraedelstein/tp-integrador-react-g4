@@ -1,27 +1,20 @@
 import { useState, useEffect } from 'react';
 import { createLibro } from '../../services/libroService';
-import { getCategories } from '../../services/categoryService';
-import { getPersonas } from '../../services/personService';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Form, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import './styles.css';
 
 export default function LibroForm(props) {
+  const dispatch = useDispatch();
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [categoria, setCategoria] = useState('');
-  const [categorias, setCategorias] = useState('');
   const [persona, setPersona] = useState('');
-  const [personas, setPersonas] = useState('');
+  const categorias = useSelector((state) => state.categorias);
+  const personas = useSelector((state) => state.personas);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const categList = await getCategories();
-      setCategorias(categList);
-      const personasList = await getPersonas();
-      setPersonas(personasList);
-    };
-    fetchData();
-  }, []);
+  useEffect(() => {}, []);
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -33,32 +26,50 @@ export default function LibroForm(props) {
     setDescripcion(newDescription);
   };
 
-  const handleSubmit = async (event) => {
+  const handleChangePersona = (e) => {
+    const persona = e.target.value;
+    console.log(persona);
+    setPersona(persona);
+  };
+
+  const handleChangeCategoria = (e) => {
+    const categoria = e.target.value;
+    console.log(categoria);
+    setCategoria(categoria);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      event.preventDefault();
       const libro = {
         nombre: nombre,
         descripcion: descripcion,
         categoria_id: categoria,
         persona_id: persona,
       };
-      await createLibro(libro);
+      const libroCreated = await createLibro(libro);
+      dispatch({ type: 'ADD', list: 'LIBRO', detail: { libro: libroCreated } });
       props.history.push('/libro');
     } catch (e) {
+      //todo informar al usuario
       console.log(`Error creating libro ${nombre}`);
     }
   };
 
+  const handleCancel = () => {
+    props.history.push('/libro');
+  };
+
   return (
-    <Container className="categories">
+    <Container className="libros-new">
       <Row>
         <Col>
           <h1 className="title">Nuevo Libro</h1>
         </Col>
       </Row>
 
-      <Form>
-        <Form.Group>
+      <Form className="libros-form">
+        <Form.Group className="libros-form-group">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
             type="text"
@@ -68,39 +79,50 @@ export default function LibroForm(props) {
             onChange={handleChangeNombre}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="libros-form-group">
           <Form.Label>Descripción</Form.Label>
           <Form.Control
             type="text"
             name="descripcion"
             placeholder="descripcion"
-            value={nombre}
+            value={descripcion}
             onChange={handleChangeDescription}
           />
         </Form.Group>
-        <Form.Group as={Col} controlId="formGridCategory">
+        <Form.Group className="libros-form-group" controlId="formGridCategory">
           <Form.Label>Categoria</Form.Label>
-          <Form.Select defaultValue="Seleccionar...">
+          <Form.Select
+            defaultValue="Seleccionar..."
+            onChange={handleChangeCategoria}
+          >
             <option>Seleccionar...</option>
             {categorias.length > 0 &&
               categorias.map((cat) => {
-                return <option>{cat.nombre}</option>;
+                return <option value={cat.id}>{cat.nombre}</option>;
               })}
           </Form.Select>
         </Form.Group>
-        <Form.Group as={Col} controlId="formGridPerson">
+        <Form.Group className="libros-form-group" controlId="formGridPerson">
           <Form.Label>Persona</Form.Label>
-          <Form.Select defaultValue="Seleccionar...">
+          <Form.Select
+            defaultValue="Seleccionar..."
+            onChange={handleChangePersona}
+          >
             <option>Seleccionar...</option>
             {personas.length > 0 &&
               personas.map((persona) => {
-                return <option>{persona.nombre}</option>;
+                return <option value={persona.id}>{persona.nombre}</option>;
               })}
           </Form.Select>
         </Form.Group>
-        <Button type="submit" onClick={handleSubmit}>
-          Guardar
-        </Button>
+        <div className="btn-form-actions">
+          <Button type="submit" onClick={handleSubmit}>
+            Guardar
+          </Button>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancelar
+          </Button>
+        </div>
       </Form>
     </Container>
   );

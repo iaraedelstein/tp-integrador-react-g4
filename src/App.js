@@ -10,8 +10,26 @@ import LibrosList from './components/LibrosList';
 import LibroForm from './components/LibroForm';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch } from 'react-redux';
+import { getCategories } from './services/categoryService';
+import { getLibros } from './services/libroService';
+import { getPersonas } from './services/personService';
 
 function App() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const categorias = await getCategories();
+      const personas = await getPersonas();
+      const libros = await getLibros();
+      dispatch({ type: 'RESET', list: 'CATEGORIA', detail: { categorias } });
+      dispatch({ type: 'RESET', list: 'PERSONA', detail: { personas } });
+      dispatch({ type: 'RESET', list: 'LIBRO', detail: { libros } });
+    };
+    fetchData();
+  }, [dispatch]);
+
   return (
     <div className="App">
       <Router>
