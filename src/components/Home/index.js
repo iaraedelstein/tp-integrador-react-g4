@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
+import { Button} from 'react-bootstrap';
+import { Card} from 'react-bootstrap';
 
 function Home() {
   return (
@@ -11,51 +13,39 @@ function Home() {
       </nav>
       <div class="presentation"></div>
       <div class="cards-cont">
-        <div class="card">
-          <h2>Libros</h2>
-          <div class="links">
-            <div class="link">
-              <Link to="/libro" style={{ textDecoration: 'none' }}>
-                Ver libros
-              </Link>
-            </div>
-            <div class="link">
-              <Link to="/libro/new" style={{ textDecoration: 'none' }}>
-                Agregar libro
-              </Link>
-            </div>
+      <Card style={{ width: '18rem' }}>
+        <Card.Body>
+          <Card.Title>Libros</Card.Title>
+          <Card.Text>
+            Ver, editar y administrar los libros y sus préstamos.
+          </Card.Text>
+          <div class="link-cont">
+            <Link to="/libro" className="btn btn-primary">Ir a libros</Link>
           </div>
-        </div>
-        <div class="card">
-          <h2>Personas</h2>
-          <div class="links">
-            <div class="link">
-              <Link to="/persona" style={{ textDecoration: 'none' }}>
-                Ver personas
-              </Link>
-            </div>
-            <div class="link">
-              <Link to="/persona/new" style={{ textDecoration: 'none' }}>
-                Agregar persona
-              </Link>
-            </div>
+        </Card.Body>
+      </Card>
+      <Card style={{ width: '18rem' }}>
+        <Card.Body>
+          <Card.Title>Personas</Card.Title>
+          <Card.Text>
+            Ver y editar a las personas registradas y sus libros prestados.
+          </Card.Text>
+          <div class="link-cont">
+            <Link to="/persona" className="btn btn-primary">Ir a personas</Link>
           </div>
-        </div>
-        <div class="card">
-          <h2>Categorias</h2>
-          <div class="links">
-            <div class="link">
-              <Link to="/categoria" style={{ textDecoration: 'none' }}>
-                Ver categorias
-              </Link>
-            </div>
-            <div class="link">
-              <Link to="/categoria/new" style={{ textDecoration: 'none' }}>
-                Agregar categoria
-              </Link>
-            </div>
+        </Card.Body>
+      </Card>
+      <Card style={{ width: '18rem' }}>
+        <Card.Body className="card-body">
+          <Card.Title>Categorias</Card.Title>
+          <Card.Text>
+            Ver y editar las categorías de los libros.
+          </Card.Text>
+          <div class="link-cont">
+            <Link to="/categoria" className="btn btn-primary">Ir a categorías</Link>
           </div>
-        </div>
+        </Card.Body>
+      </Card>
       </div>
       <footer>
         <h3>Tp Integrador Grupo 4</h3>
