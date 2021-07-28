@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { createPersona } from '../../services/personService';
-import './styles.css';
+import { useDispatch } from 'react-redux';
 
 export default function PersonaForm(props) {
+  const dispatch = useDispatch();
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
@@ -29,52 +30,84 @@ export default function PersonaForm(props) {
     setAlias(newAlias);
   };
 
-  const createPerson = async () => {
-    await createPersona(nombre, apellido, email, alias);
+  const handleSubmit = async () => {
+    const persona = {
+      nombre: nombre,
+      apellido: apellido,
+      email: email,
+      alias: alias,
+    };
+    const personaCreated = await createPersona(persona);
+    dispatch({
+      type: 'ADD',
+      list: 'PERSONA',
+      detail: { persona: personaCreated },
+    });
+    props.history.push('/persona');
+  };
+
+  const handleCancel = () => {
     props.history.push('/persona');
   };
 
   return (
-    <Container>
+    <Container className="container-new">
       <Row>
         <Col>
           <h1 className="title">Nueva Persona</h1>
         </Col>
       </Row>
-      <Form className="form">
-        <div className="input-cont1">
-          <input
+      <Form className="container-new-form">
+        <Form.Group className="input-form-group">
+          <Form.Label>Nombre</Form.Label>
+          <Form.Control
             type="text"
             name="nombre"
             placeholder="nombre"
             value={nombre}
             onChange={handleChangeNombre}
           />
-          <input
+        </Form.Group>
+        <Form.Group className="input-form-group">
+          <Form.Label>Apellido</Form.Label>
+          <Form.Control
             type="text"
             name="apellido"
             placeholder="apellido"
             value={apellido}
             onChange={handleChangeApellido}
           />
-        </div>
-        <div className="input-cont2">
-          <input
+        </Form.Group>
+
+        <Form.Group className="input-form-group">
+          <Form.Label>Alias</Form.Label>
+          <Form.Control
             type="text"
             name="alias"
             placeholder="alias"
             value={alias}
             onChange={handleChangeAlias}
           />
-          <input
+        </Form.Group>
+        <Form.Group className="input-form-group">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
             type="email"
             name="email"
             placeholder="email"
             value={email}
             onChange={handleChangeEmail}
           />
+        </Form.Group>
+
+        <div className="btn-form-actions">
+          <Button type="submit" onClick={handleSubmit}>
+            Guardar
+          </Button>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancelar
+          </Button>
         </div>
-        <Button onClick={createPerson}>Guardar</Button>
       </Form>
     </Container>
   );

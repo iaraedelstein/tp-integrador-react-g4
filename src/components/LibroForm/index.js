@@ -3,7 +3,6 @@ import { createLibro } from '../../services/libroService';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import './styles.css';
 
 export default function LibroForm(props) {
   const dispatch = useDispatch();
@@ -61,15 +60,15 @@ export default function LibroForm(props) {
   };
 
   return (
-    <Container className="libros-new">
+    <Container className="container-new">
       <Row>
         <Col>
           <h1 className="title">Nuevo Libro</h1>
         </Col>
       </Row>
 
-      <Form className="libros-form">
-        <Form.Group className="libros-form-group">
+      <Form className="container-new-form">
+        <Form.Group className="input-form-group">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
             type="text"
@@ -79,7 +78,7 @@ export default function LibroForm(props) {
             onChange={handleChangeNombre}
           />
         </Form.Group>
-        <Form.Group className="libros-form-group">
+        <Form.Group className="input-form-group">
           <Form.Label>Descripción</Form.Label>
           <Form.Control
             type="text"
@@ -89,7 +88,7 @@ export default function LibroForm(props) {
             onChange={handleChangeDescription}
           />
         </Form.Group>
-        <Form.Group className="libros-form-group" controlId="formGridCategory">
+        <Form.Group className="input-form-group" controlId="formGridCategory">
           <Form.Label>Categoria</Form.Label>
           <Form.Select
             defaultValue="Seleccionar..."
@@ -102,7 +101,7 @@ export default function LibroForm(props) {
               })}
           </Form.Select>
         </Form.Group>
-        <Form.Group className="libros-form-group" controlId="formGridPerson">
+        <Form.Group className="input-form-group" controlId="formGridPerson">
           <Form.Label>Persona</Form.Label>
           <Form.Select
             defaultValue="Seleccionar..."

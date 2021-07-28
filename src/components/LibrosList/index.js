@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { deleteLibro } from '../../services/libroService';
-import './styles.css';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import LibroForm from '../LibroForm';
 
 export default function LibroList(props) {
   const dispatch = useDispatch();
@@ -29,7 +27,7 @@ export default function LibroList(props) {
   const handleEdit = async (libro) => {};
 
   return (
-    <Container className="libros">
+    <Container className="container-list">
       <Row>
         <Col>
           <h1 className="title">Libros</h1>
@@ -42,14 +40,14 @@ export default function LibroList(props) {
           </Link>
         </div>
       </Row>
-      <div className="libros-list">
+      <div className="container-list__list">
         {libros.map((libro) => {
           return (
             <Card
               bg={'light'}
               key={libro.id}
               style={{ width: '18rem' }}
-              className="mb-2 libro-wrapper"
+              className="mb-2 card-wrapper"
             >
               <Card.Header>#{libro.id}</Card.Header>
               <Card.Body>
@@ -57,7 +55,7 @@ export default function LibroList(props) {
                 <Card.Text>{libro.descripcion.toLowerCase()}</Card.Text>
                 <Card.Text> Categoría: {libro.categoria_id}</Card.Text>
                 <Card.Text> Persona: {libro.persona_id}</Card.Text>
-                <div className="libro-actions">
+                <div className="card-actions">
                   <Link
                     className="link"
                     to={`/libro/${libro.id.toString()}/edit`}
@@ -65,7 +63,7 @@ export default function LibroList(props) {
                     <FaPencilAlt></FaPencilAlt>
                   </Link>
                   <button
-                    className="libro-actions__delete"
+                    className="card-actions__delete"
                     onClick={() => handleDeleteLibro(libro.id)}
                   >
                     <FaTrash></FaTrash>

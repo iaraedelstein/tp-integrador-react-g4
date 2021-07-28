@@ -3,9 +3,9 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { deleteCategory } from '../../services/categoryService';
 import CategoriaLibros from '../CategoriaLibros';
-import './styles.css';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import './styles.css';
 
 export default function CategoriaList(props) {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function CategoriaList(props) {
         </div>
       </Row>
 
-      <div className="categories-list">
+      <div className="container-list__list">
         {categorias.map((cat) => {
           return (
             <div className="category-wrapper" key={cat.id}>
@@ -47,7 +47,7 @@ export default function CategoriaList(props) {
               >
                 {cat.nombre}
               </button>
-              <div className="category-actions">
+              <div className="card-actions">
                 <Link
                   className="link"
                   to={`/categoria/${cat.id.toString()}/edit`}
@@ -55,7 +55,7 @@ export default function CategoriaList(props) {
                   <FaPencilAlt></FaPencilAlt>
                 </Link>
                 <button
-                  className="category-actions__delete"
+                  className="card-actions__delete"
                   onClick={() => handleDeleteCategory(cat.id)}
                 >
                   <FaTrash></FaTrash>
