@@ -23,7 +23,7 @@ export default function PersonaList(props) {
     <Container className="container-list">
       <Row>
         <Col>
-          <h1 className="title">Persona</h1>
+          <h1 className="title">Personas</h1>
         </Col>
       </Row>
       <Row>

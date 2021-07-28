@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function LibroList(props) {
   const dispatch = useDispatch();
 
+  const [librosComplete, setLibrosComplete] = useState([]);
   const libros = useSelector((state) => state.libros);
   const categorias = useSelector((state) => state.categorias);
   const personas = useSelector((state) => state.personas);
@@ -24,7 +25,22 @@ export default function LibroList(props) {
     }
   };
 
-  const handleEdit = async (libro) => {};
+  useEffect(() => {
+    setLibrosComplete(
+      libros.map((l) => {
+        const categoria = categorias.find((c) => c.id === l.categoria_id);
+        const persona = personas.find((p) => p.id === l.persona_id);
+        const libro = {
+          id: l.id,
+          nombre: l.nombre,
+          descripcion: l.descripcion,
+          categoria,
+          persona,
+        };
+        return libro;
+      })
+    );
+  }, [libros, categorias, personas]);
 
   return (
     <Container className="container-list">
@@ -41,7 +57,7 @@ export default function LibroList(props) {
         </div>
       </Row>
       <div className="container-list__list">
-        {libros.map((libro) => {
+        {librosComplete.map((libro) => {
           return (
             <Card
               bg={'light'}
@@ -53,8 +69,12 @@ export default function LibroList(props) {
               <Card.Body>
                 <Card.Title>{libro.nombre}</Card.Title>
                 <Card.Text>{libro.descripcion.toLowerCase()}</Card.Text>
-                <Card.Text> Categoría: {libro.categoria_id}</Card.Text>
-                <Card.Text> Persona: {libro.persona_id}</Card.Text>
+                <Card.Text>{libro.categoria.nombre}</Card.Text>
+                <Card.Text>
+                  {libro.persona
+                    ? `${libro.persona.nombre} ${libro.persona.apellido}`
+                    : ''}
+                </Card.Text>
                 <div className="card-actions">
                   <Link
                     className="link"
