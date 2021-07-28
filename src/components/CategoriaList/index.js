@@ -1,34 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { getCategories, deleteCategory } from '../../services/categoryService';
+import { deleteCategory } from '../../services/categoryService';
 import CategoriaLibros from '../CategoriaLibros';
-import './styles.css';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
-//import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import './styles.css';
 
 export default function CategoriaList(props) {
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+  const categorias = useSelector((state) => state.categorias);
   const [category, setCategory] = useState('');
-
-  const fetchData = async () => {
-    const categories = await getCategories();
-    setCategories(categories);
-  };
 
   const handleDeleteCategory = async (id) => {
     try {
       await deleteCategory(id);
-      fetchData();
+      dispatch({ type: 'DELETE', list: 'CATEGORIA', detail: { id } });
     } catch (e) {
       console.log(`Error deleting category ${id}`);
       //TODO show error message
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <Container className="categories">
@@ -45,8 +37,8 @@ export default function CategoriaList(props) {
         </div>
       </Row>
 
-      <div className="categories-list">
-        {categories.map((cat) => {
+      <div className="container-list__list">
+        {categorias.map((cat) => {
           return (
             <div className="category-wrapper" key={cat.id}>
               <button
@@ -55,7 +47,7 @@ export default function CategoriaList(props) {
               >
                 {cat.nombre}
               </button>
-              <div className="category-actions">
+              <div className="card-actions">
                 <Link
                   className="link"
                   to={`/categoria/${cat.id.toString()}/edit`}
@@ -63,7 +55,7 @@ export default function CategoriaList(props) {
                   <FaPencilAlt></FaPencilAlt>
                 </Link>
                 <button
-                  className="category-actions__delete"
+                  className="card-actions__delete"
                   onClick={() => handleDeleteCategory(cat.id)}
                 >
                   <FaTrash></FaTrash>

@@ -1,22 +1,65 @@
 const estadoInicial = {
-  numero: 0,
+  categorias: [],
+  personas: [],
+  libros: [],
 };
 
-export default function reducer(state = estadoInicial, action) {
-  switch (action.type) {
-    case 'INCREMENTAR':
-      return {
-        numero: state.numero + 1,
-      };
-    case 'DECREMENTAR':
-      return {
-        numero: state.numero - 1,
-      };
-    case 'RESET':
-      return {
-        numero: 0,
-      };
-    default:
-      return state;
+const CATEGORIA = 'CATEGORIA';
+const PERSONA = 'PERSONA';
+const LIBRO = 'LIBRO';
+
+export default function reducer(state = estadoInicial, { type, list, detail }) {
+  const nuevoState = JSON.parse(JSON.stringify(state));
+  if (list === CATEGORIA) {
+    switch (type) {
+      case 'ADD':
+        nuevoState.categorias.push(detail.categoria);
+        return nuevoState;
+      case 'RESET':
+        nuevoState.categorias = detail.categorias;
+        return nuevoState;
+      case 'DELETE':
+        nuevoState.categorias = nuevoState.categorias.filter(
+          (cat) => cat.id !== detail.id
+        );
+        return nuevoState;
+      default:
+        nuevoState.categorias = [];
+        return nuevoState;
+    }
+  }
+  if (list === PERSONA) {
+    switch (type) {
+      case 'ADD':
+        nuevoState.personas.push(detail.persona);
+        return nuevoState;
+      case 'RESET':
+        nuevoState.personas = detail.personas;
+        return nuevoState;
+      case 'DELETE':
+        nuevoState.personas = nuevoState.personas.filter(
+          (p) => p.id !== detail.id
+        );
+        return nuevoState;
+      default:
+        nuevoState.personas = [];
+        return nuevoState;
+    }
+  }
+  if (list === LIBRO) {
+    switch (type) {
+      case 'ADD':
+        nuevoState.libros.push(detail.libro);
+        return nuevoState;
+      case 'RESET':
+        nuevoState.libros = detail.libros;
+        return nuevoState;
+      case 'DELETE':
+        nuevoState.libros = nuevoState.libros.filter((l) => l.id !== detail.id);
+        return nuevoState;
+      default:
+        nuevoState.libros = [];
+        return nuevoState;
+    }
   }
 }

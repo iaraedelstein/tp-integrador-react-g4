@@ -1,38 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { getLibros, deleteLibro } from '../../services/libroService';
-import './styles.css';
+import { deleteLibro } from '../../services/libroService';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
-//import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function LibroList(props) {
-  const [libros, setLibros] = useState([]);
-  const [libroEdit, setLibroEdit] = useState();
+  const dispatch = useDispatch();
 
-  const fetchData = async () => {
-    const libros = await getLibros();
-    setLibros(libros);
-  };
+  const [librosComplete, setLibrosComplete] = useState([]);
+  const libros = useSelector((state) => state.libros);
+  const categorias = useSelector((state) => state.categorias);
+  const personas = useSelector((state) => state.personas);
+
+  const [libroEdit, setLibroEdit] = useState();
 
   const handleDeleteLibro = async (id) => {
     try {
       await deleteLibro(id);
-      fetchData();
+      dispatch({ type: 'DELETE', list: 'LIBRO', detail: { id } });
     } catch (e) {
       console.log(`Error deleting libro ${id}`);
       //TODO show error message
     }
   };
 
-  const handleEdit = async (libro) => {};
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    setLibrosComplete(
+      libros.map((l) => {
+        const categoria = categorias.find((c) => c.id === l.categoria_id);
+        const persona = personas.find((p) => p.id === l.persona_id);
+        const libro = {
+          id: l.id,
+          nombre: l.nombre,
+          descripcion: l.descripcion,
+          categoria,
+          persona,
+        };
+        return libro;
+      })
+    );
+  }, [libros, categorias, personas]);
 
   return (
-    <Container className="libros">
+    <Container className="container-list">
       <Row>
         <Col>
           <h1 className="title">Libros</h1>
@@ -45,23 +56,26 @@ export default function LibroList(props) {
           </Link>
         </div>
       </Row>
-
-      <div className="libros-list">
-        {libros.map((libro) => {
+      <div className="container-list__list">
+        {librosComplete.map((libro) => {
           return (
             <Card
               bg={'light'}
               key={libro.id}
               style={{ width: '18rem' }}
-              className="mb-2 libro-wrapper"
+              className="mb-2 card-wrapper"
             >
               <Card.Header>#{libro.id}</Card.Header>
               <Card.Body>
                 <Card.Title>{libro.nombre}</Card.Title>
                 <Card.Text>{libro.descripcion.toLowerCase()}</Card.Text>
-                <Card.Text> Categoría: {libro.categoria_id}</Card.Text>
-                <Card.Text> Persona: {libro.persona_id}</Card.Text>
-                <div className="libro-actions">
+                <Card.Text>{libro.categoria.nombre}</Card.Text>
+                <Card.Text>
+                  {libro.persona
+                    ? `${libro.persona.nombre} ${libro.persona.apellido}`
+                    : ''}
+                </Card.Text>
+                <div className="card-actions">
                   <Link
                     className="link"
                     to={`/libro/${libro.id.toString()}/edit`}
@@ -69,7 +83,7 @@ export default function LibroList(props) {
                     <FaPencilAlt></FaPencilAlt>
                   </Link>
                   <button
-                    className="libro-actions__delete"
+                    className="card-actions__delete"
                     onClick={() => handleDeleteLibro(libro.id)}
                   >
                     <FaTrash></FaTrash>
