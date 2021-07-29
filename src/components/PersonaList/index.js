@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { deletePersona } from '../../services/personService';
 import { Link } from 'react-router-dom';
 import { Card, Col, Container, Row } from 'react-bootstrap';
@@ -39,16 +39,18 @@ export default function PersonaList(props) {
             <Card
               bg={'light'}
               key={persona.id}
-              style={{ width: '18rem' }}
+              style={{ width: '17rem', height: '19rem' }}
               className="mb-2 card-wrapper"
             >
               <Card.Header>#{persona.id}</Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  {persona.nombre} {persona.apellido}
-                </Card.Title>
-                <Card.Text>{persona.email}</Card.Text>
-                <Card.Text>{persona.alias}</Card.Text>
+              <Card.Body className="card-body-containter">
+                <div>
+                  <Card.Title>
+                    {persona.nombre} {persona.apellido}
+                  </Card.Title>
+                  <Card.Text>{persona.email}</Card.Text>
+                  <Card.Text>{persona.alias}</Card.Text>
+                </div>
                 <div className="card-actions">
                   <Link
                     className="link"

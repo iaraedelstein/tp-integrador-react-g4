@@ -57,6 +57,14 @@ export default function reducer(state = estadoInicial, { type, list, detail }) {
       case 'DELETE':
         nuevoState.libros = nuevoState.libros.filter((l) => l.id !== detail.id);
         return nuevoState;
+      case 'RETURN':
+        const bookToReturn = nuevoState.libros.find((l) => l.id === detail.id);
+        bookToReturn.persona_id = null;
+        return nuevoState;
+      case 'ASSIGN':
+        const bookToAssign = nuevoState.libros.find((l) => l.id === detail.id);
+        bookToAssign.persona_id = detail.persona_id;
+        return nuevoState;
       default:
         nuevoState.libros = [];
         return nuevoState;

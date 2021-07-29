@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
-import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 
 function Home() {
   return (
-    <div class="main-cont">
+    <div className="main-cont">
       <h1 className="main-cont-title">Online Library</h1>
       <div className="cards-cont">
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '20rem' }}>
           <Card.Body>
             <Card.Title>Personas</Card.Title>
             <Card.Text>
@@ -22,7 +21,7 @@ function Home() {
             </div>
           </Card.Body>
         </Card>
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '20rem' }}>
           <Card.Body className="card-body">
             <Card.Title>Categorías</Card.Title>
             <Card.Text>Ver y editar las categorías de los libros.</Card.Text>
@@ -33,7 +32,7 @@ function Home() {
             </div>
           </Card.Body>
         </Card>
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '20rem' }}>
           <Card.Body>
             <Card.Title>Libros</Card.Title>
             <Card.Text>

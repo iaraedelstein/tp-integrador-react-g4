@@ -27,7 +27,6 @@ export default function LibroForm(props) {
 
   const handleChangePersona = (e) => {
     const persona = e.target.value;
-    console.log(persona);
     setPersona(persona);
   };
 
@@ -110,7 +109,11 @@ export default function LibroForm(props) {
             <option>Seleccionar...</option>
             {personas.length > 0 &&
               personas.map((persona) => {
-                return <option value={persona.id}>{persona.nombre}</option>;
+                return (
+                  <option
+                    value={persona.id}
+                  >{`${persona.nombre} ${persona.apellido} (${persona.email})`}</option>
+                );
               })}
           </Form.Select>
         </Form.Group>
