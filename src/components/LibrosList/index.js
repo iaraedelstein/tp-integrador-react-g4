@@ -63,7 +63,6 @@ export default function LibroList(props) {
         detail: { id: libro.id, persona_id: personaId },
       });
       setShowModal(false);
-      setLibro();
     } catch (e) {
       console.log(`Error prestando libro libro ${libro.id}`);
       //TODO show error message
@@ -92,6 +91,12 @@ export default function LibroList(props) {
       setShowModal(true);
     }
   }, [libro]);
+
+  useEffect(() => {
+    if (!showModal) {
+      setLibro(null);
+    }
+  }, [showModal]);
 
   return (
     <>
@@ -143,17 +148,21 @@ export default function LibroList(props) {
                       <FaTrash></FaTrash>
                     </button>
                     {libro.persona ? (
-                      <button onClick={() => handleDevolverLibro(libro.id)}>
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleDevolverLibro(libro.id)}
+                      >
                         Devolver
-                      </button>
+                      </Button>
                     ) : (
-                      <button
+                      <Button
+                        variant="success"
                         onClick={() => {
                           setLibro(libro);
                         }}
                       >
                         Prestar
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </Card.Body>
