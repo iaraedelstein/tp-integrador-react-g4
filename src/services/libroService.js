@@ -21,6 +21,11 @@ export const createLibro = async (libro) => {
   return respuesta.data;
 };
 
+export const updateLibro = async (id, libro) => {
+  const respuesta = await axios.put(`${baseUrl}/libro/${id}`, libro);
+  return respuesta.data;
+};
+
 export const deleteLibro = async (id) => {
   const respuesta = await axios.delete(`${baseUrl}/libro/${id}`);
   return respuesta.data;

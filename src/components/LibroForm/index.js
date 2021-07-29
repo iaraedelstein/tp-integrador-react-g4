@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
-import { createLibro } from '../../services/libroService';
 import Button from 'react-bootstrap/Button';
+import {
+  getLibro,
+  createLibro,
+  updateLibro,
+} from '../../services/libroService';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function LibroForm(props) {
   const dispatch = useDispatch();
+  const id = props.match.params.id ? parseInt(props.match.params.id) : null;
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [categoria, setCategoria] = useState('');
@@ -13,7 +18,25 @@ export default function LibroForm(props) {
   const categorias = useSelector((state) => state.categorias);
   const personas = useSelector((state) => state.personas);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    async function fetchData() {
+      if (id !== null) {
+        try {
+          const libro = await getLibro(id);
+          setNombre(libro.nombre);
+          setDescripcion(libro.descripcion);
+          if (libro.persona_id) {
+            setPersona(libro.persona_id);
+          }
+          setCategoria(libro.categoria_id);
+        } catch (e) {
+          //ERROR SHOW
+          console.log(`Error getting category ${id}`);
+        }
+      }
+    }
+    fetchData();
+  }, [id]);
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -32,7 +55,6 @@ export default function LibroForm(props) {
 
   const handleChangeCategoria = (e) => {
     const categoria = e.target.value;
-    console.log(categoria);
     setCategoria(categoria);
   };
 
@@ -45,12 +67,25 @@ export default function LibroForm(props) {
         categoria_id: categoria,
         persona_id: persona,
       };
-      const libroCreated = await createLibro(libro);
-      dispatch({ type: 'ADD', list: 'LIBRO', detail: { libro: libroCreated } });
+      if (id !== null) {
+        const libroUpdated = await updateLibro(id, libro);
+        dispatch({
+          type: 'UPDATE',
+          list: 'LIBRO',
+          detail: { id, libro: libroUpdated },
+        });
+      } else {
+        const libroCreated = await createLibro(libro);
+        dispatch({
+          type: 'ADD',
+          list: 'LIBRO',
+          detail: { libro: libroCreated },
+        });
+      }
       props.history.push('/libro');
     } catch (e) {
       //todo informar al usuario
-      console.log(`Error creating libro ${nombre}`);
+      console.log(`Error updating libro ${nombre}`);
     }
   };
 
@@ -61,9 +96,7 @@ export default function LibroForm(props) {
   return (
     <Container className="container-new">
       <Row>
-        <Col>
-          <h1 className="title">Nuevo Libro</h1>
-        </Col>
+        <Col>{id !== null ? 'Editar Libro' : 'Nuevo Libro'}</Col>
       </Row>
 
       <Form className="container-new-form">
@@ -75,6 +108,7 @@ export default function LibroForm(props) {
             placeholder="nombre"
             value={nombre}
             onChange={handleChangeNombre}
+            disabled={id !== null}
           />
         </Form.Group>
         <Form.Group className="input-form-group">
@@ -92,6 +126,8 @@ export default function LibroForm(props) {
           <Form.Select
             defaultValue="Seleccionar..."
             onChange={handleChangeCategoria}
+            value={categoria}
+            disabled={id !== null}
           >
             <option>Seleccionar...</option>
             {categorias.length > 0 &&
@@ -105,14 +141,16 @@ export default function LibroForm(props) {
           <Form.Select
             defaultValue="Seleccionar..."
             onChange={handleChangePersona}
+            value={persona}
+            disabled={id !== null}
           >
             <option>Seleccionar...</option>
             {personas.length > 0 &&
-              personas.map((persona) => {
+              personas.map((p) => {
                 return (
                   <option
-                    value={persona.id}
-                  >{`${persona.nombre} ${persona.apellido} (${persona.email})`}</option>
+                    value={p.id}
+                  >{`${p.nombre} ${p.apellido} (${p.email})`}</option>
                 );
               })}
           </Form.Select>

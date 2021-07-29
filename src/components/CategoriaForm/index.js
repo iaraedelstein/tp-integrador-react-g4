@@ -6,8 +6,10 @@ import {
 } from '../../services/categoryService';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Form, Row } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
 export default function CategoriaForm(props) {
+  const dispatch = useDispatch();
   const id = props.match.params.id;
   const [nombre, setNombre] = useState('');
 
@@ -15,11 +17,10 @@ export default function CategoriaForm(props) {
     async function fetchData() {
       if (id !== undefined) {
         try {
-          console.log(id);
           const category = await getCategory(id);
-          console.log(category);
           setNombre(category.nombre);
         } catch (e) {
+          //ERROR SHOW
           console.log(`Error getting category ${id}`);
         }
       }
@@ -36,11 +37,20 @@ export default function CategoriaForm(props) {
     try {
       event.preventDefault();
       if (id !== undefined) {
-        await updateCategory(id, nombre);
+        const catUpdated = await updateCategory(id, nombre);
+        dispatch({
+          type: 'UPDATE',
+          list: 'CATEGORIA',
+          detail: { categoria: catUpdated },
+        });
       } else {
-        await createCategory(nombre);
+        const catNew = await createCategory(nombre);
+        dispatch({
+          type: 'ADD',
+          list: 'CATEGORIA',
+          detail: { categoria: catNew },
+        });
       }
-
       props.history.push('/categoria');
     } catch (e) {
       console.log(`Error updating category ${nombre}`);

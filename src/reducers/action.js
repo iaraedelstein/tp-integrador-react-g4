@@ -65,6 +65,10 @@ export default function reducer(state = estadoInicial, { type, list, detail }) {
         const bookToAssign = nuevoState.libros.find((l) => l.id === detail.id);
         bookToAssign.persona_id = parseInt(detail.persona_id);
         return nuevoState;
+      case 'UPDATE':
+        const bookToUpdate = nuevoState.libros.find((l) => l.id === detail.id);
+        bookToUpdate.descripcion = detail.libro.descripcion;
+        return nuevoState;
       default:
         nuevoState.libros = [];
         return nuevoState;

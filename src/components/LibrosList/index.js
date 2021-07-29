@@ -174,7 +174,7 @@ export default function LibroList(props) {
 
       {showModal && libro && (
         <Modal.Dialog>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>Prestar: {libro.nombre}</Modal.Title>
           </Modal.Header>
 
@@ -206,7 +206,12 @@ export default function LibroList(props) {
                   <Button type="submit" onClick={handlePrestarLibro}>
                     Guardar
                   </Button>
-                  <Button variant="secondary">Cancelar</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancelar
+                  </Button>
                 </div>
               </Form>
             }

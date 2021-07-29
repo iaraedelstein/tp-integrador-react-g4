@@ -44,6 +44,7 @@ function App() {
         <Route exact path="/categoria/:id/edit" component={CategoriaForm} />
         <Route exact path="/libro" component={LibrosList} />
         <Route exact path="/libro/new" component={LibroForm} />
+        <Route exact path="/libro/:id/edit" component={LibroForm} />
       </Router>
     </div>
   );

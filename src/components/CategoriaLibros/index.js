@@ -45,7 +45,10 @@ export default function CategoriaLibros({ id }) {
                   <td className="libro-info"> {libro.id} </td>
                   <td className="libro-info"> {libro.nombre} </td>
                   <td className="libro-info"> {libro.descripcion} </td>
-                  <td className="libro-info"> {libro.persona.email} </td>
+                  <td className="libro-info">
+                    {' '}
+                    {libro.persona ? libro.persona.email : 'N/A'}{' '}
+                  </td>
                 </tr>
               ))}
             </tbody>
