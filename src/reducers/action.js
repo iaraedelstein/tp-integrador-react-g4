@@ -23,6 +23,12 @@ export default function reducer(state = estadoInicial, { type, list, detail }) {
           (cat) => cat.id !== detail.id
         );
         return nuevoState;
+      case 'UPDATE':
+        const catToUpdate = nuevoState.categorias.find(
+          (c) => c.id === detail.id
+        );
+        catToUpdate.nombre = detail.nombre;
+        return nuevoState;
       default:
         nuevoState.categorias = [];
         return nuevoState;

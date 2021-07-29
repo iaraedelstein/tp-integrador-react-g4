@@ -50,12 +50,12 @@ export default function LibroForm(props) {
 
   const handleChangePersona = (e) => {
     const persona = e.target.value;
-    setPersona(persona);
+    setPersona(parseInt(persona));
   };
 
   const handleChangeCategoria = (e) => {
     const categoria = e.target.value;
-    setCategoria(categoria);
+    setCategoria(parseInt(categoria));
   };
 
   const handleSubmit = async (e) => {
@@ -65,8 +65,10 @@ export default function LibroForm(props) {
         nombre: nombre,
         descripcion: descripcion,
         categoria_id: categoria,
-        persona_id: persona,
       };
+      if (persona) {
+        libro.persona_id = persona;
+      }
       if (id !== null) {
         const libroUpdated = await updateLibro(id, libro);
         dispatch({

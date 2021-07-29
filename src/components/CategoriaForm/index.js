@@ -10,7 +10,9 @@ import { useDispatch } from 'react-redux';
 
 export default function CategoriaForm(props) {
   const dispatch = useDispatch();
-  const id = props.match.params.id;
+  const id = props.match.params.id
+    ? parseInt(props.match.params.id)
+    : undefined;
   const [nombre, setNombre] = useState('');
 
   useEffect(() => {
@@ -37,11 +39,11 @@ export default function CategoriaForm(props) {
     try {
       event.preventDefault();
       if (id !== undefined) {
-        const catUpdated = await updateCategory(id, nombre);
+        await updateCategory(id, nombre);
         dispatch({
           type: 'UPDATE',
           list: 'CATEGORIA',
-          detail: { categoria: catUpdated },
+          detail: { id, nombre },
         });
       } else {
         const catNew = await createCategory(nombre);
