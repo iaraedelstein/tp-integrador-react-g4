@@ -1,5 +1,6 @@
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import logo from '../../img/logo-utn.png';
 
 export default function Menu() {
   return (
@@ -8,7 +9,7 @@ export default function Menu() {
         <Navbar.Brand as={Link} to="/">
           <img
             alt=""
-            src="/logo192.png"
+            src={logo}
             width="30"
             height="30"
             className="d-inline-block align-top"
