@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Container, Row, Table } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { getLibrosByCategory } from '../../services/categoryService';
 import './styles.css';
 
 export default function CategoriaLibros({ id }) {
   const [libros, setLibros] = useState([]);
+  const personas = useSelector((state) => state.personas);
 
   useEffect(() => {
     const fetchData = async () => {
       const libros = await getLibrosByCategory(id);
-      setLibros(libros);
+      const librosList = libros.map((l) => {
+        const persona = personas.find((p) => p.id === l.persona_id);
+        const libro = {
+          id: l.id,
+          nombre: l.nombre,
+          descripcion: l.descripcion,
+          persona,
+        };
+        return libro;
+      });
+      setLibros(librosList);
     };
     fetchData();
-  }, [id]);
+  }, [id, personas]);
 
   return (
     <Container className="books">
@@ -33,7 +45,7 @@ export default function CategoriaLibros({ id }) {
                   <td className="libro-info"> {libro.id} </td>
                   <td className="libro-info"> {libro.nombre} </td>
                   <td className="libro-info"> {libro.descripcion} </td>
-                  <td className="libro-info"> {libro.persona_id} </td>
+                  <td className="libro-info"> {libro.persona.email} </td>
                 </tr>
               ))}
             </tbody>

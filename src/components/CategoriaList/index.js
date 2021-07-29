@@ -10,7 +10,7 @@ import './styles.css';
 export default function CategoriaList(props) {
   const dispatch = useDispatch();
   const categorias = useSelector((state) => state.categorias);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState();
 
   const handleDeleteCategory = async (id) => {
     try {
