@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { deletePersona } from '../../services/personService';
 import { Link } from 'react-router-dom';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { FaTrash, FaPencilAlt } from 'react-icons/fa';
+import { FaTrash, FaPencilAlt, FaBook } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import PersonaLibros from '../PersonaLibros';
 
 export default function PersonaList(props) {
   const dispatch = useDispatch();
   const personas = useSelector((state) => state.personas);
+  const [persona, setPersona] = useState();
 
   const handleDeletePersona = async (id) => {
     try {
@@ -64,12 +66,16 @@ export default function PersonaList(props) {
                   >
                     <FaTrash></FaTrash>
                   </button>
+                  <button onClick={() => setPersona(persona.id)}>
+                    <FaBook></FaBook>
+                  </button>
                 </div>
               </Card.Body>
             </Card>
           );
         })}
       </div>
+      {persona && <PersonaLibros id={persona} />}
     </Container>
   );
 }

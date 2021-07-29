@@ -65,6 +65,10 @@
   align-items: center;
 }
 
+.card-actions button {
+  border: none;
+}
+
 .card-actions__delete {
   border: none;
   color: red;

@@ -38,7 +38,6 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/persona" component={PersonaList} />
         <Route exact path="/persona/new" component={PersonaForm} />
-        {/* <Route exact path="/persona/:id/libros" component={PersonaLibros} /> */}
         <Route exact path="/categoria" component={CategoriaList} />
         <Route exact path="/categoria/new" component={CategoriaForm} />
         <Route exact path="/categoria/:id/edit" component={CategoriaForm} />
