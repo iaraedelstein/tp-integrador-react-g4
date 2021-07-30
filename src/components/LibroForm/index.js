@@ -5,7 +5,7 @@ import {
   createLibro,
   updateLibro,
 } from '../../services/libroService';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function LibroForm(props) {
@@ -17,12 +17,13 @@ export default function LibroForm(props) {
   const [persona, setPersona] = useState('');
   const categorias = useSelector((state) => state.categorias);
   const personas = useSelector((state) => state.personas);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     async function fetchData() {
       if (id !== null) {
         try {
-          const libro = await getLibro(id);
+          const libro = await getLibro('sss');
           setNombre(libro.nombre);
           setDescripcion(libro.descripcion);
           if (libro.persona_id) {
@@ -30,8 +31,8 @@ export default function LibroForm(props) {
           }
           setCategoria(libro.categoria_id);
         } catch (e) {
-          //ERROR SHOW
-          console.log(`Error getting category ${id}`);
+          setError(`Error getting libro ${id}`);
+          console.log(`Error getting libro ${id}`);
         }
       }
     }
@@ -86,7 +87,7 @@ export default function LibroForm(props) {
       }
       props.history.push('/libro');
     } catch (e) {
-      //todo informar al usuario
+      setError(e.response.data.mensaje || 'Error');
       console.log(`Error updating libro ${nombre}`);
     }
   };
@@ -97,6 +98,11 @@ export default function LibroForm(props) {
 
   return (
     <Container className="container-new">
+      {error && (
+        <Alert variant="danger" onClose={() => setError('')} dismissible>
+          {error}
+        </Alert>
+      )}
       <Row>
         <Col>
           <h1 className="title">
@@ -104,7 +110,6 @@ export default function LibroForm(props) {
           </h1>
         </Col>
       </Row>
-
       <Form className="container-new-form">
         <Form.Group className="input-form-group">
           <Form.Label>Nombre</Form.Label>
@@ -115,6 +120,7 @@ export default function LibroForm(props) {
             value={nombre}
             onChange={handleChangeNombre}
             disabled={id !== null}
+            required
           />
         </Form.Group>
         <Form.Group className="input-form-group">
@@ -134,6 +140,7 @@ export default function LibroForm(props) {
             onChange={handleChangeCategoria}
             value={categoria}
             disabled={id !== null}
+            required
           >
             <option>Seleccionar...</option>
             {categorias.length > 0 &&

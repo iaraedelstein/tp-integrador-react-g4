@@ -30,18 +30,17 @@ export default function CategoriaList(props) {
     setCategory(null);
   };
 
-  const handleEditCategory = async (cat) => {
+  const handleEditCategory = (cat) => {
     setCategory(cat);
     setShowModal(true);
   };
 
-  const handlNewCategory = async (e) => {
-    e.preventDefault();
+  const handlNewCategory = () => {
     setCategory(null);
     setShowModal(true);
   };
 
-  const handleCategoryBooks = async (cat) => {
+  const handleCategoryBooks = (cat) => {
     setCategory(cat);
     setShowCategoryBooks(true);
   };

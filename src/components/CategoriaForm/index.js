@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createCategory, updateCategory } from '../../services/categoryService';
 import Button from 'react-bootstrap/Button';
-import { Modal, Form } from 'react-bootstrap';
+import { Modal, Form, Alert } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 
 export default function CategoriaForm({
@@ -11,6 +11,7 @@ export default function CategoriaForm({
 }) {
   const dispatch = useDispatch();
   const [nombre, setNombre] = useState(category ? category.nombre : '');
+  const [error, setError] = useState('');
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -18,8 +19,8 @@ export default function CategoriaForm({
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      event.preventDefault();
       if (category) {
         await updateCategory(category.id, nombre);
         dispatch({
@@ -37,6 +38,7 @@ export default function CategoriaForm({
       }
       handleCloseModal();
     } catch (e) {
+      setError(e.response.data.mensaje || 'Error');
       console.log(`Error updating category ${nombre}`);
     }
   };
@@ -54,6 +56,11 @@ export default function CategoriaForm({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error && (
+          <Alert variant="danger" onClose={() => setError('')} dismissible>
+            {error}
+          </Alert>
+        )}
         <Form>
           <Form.Group>
             <Form.Label>Nombre</Form.Label>
@@ -62,6 +69,7 @@ export default function CategoriaForm({
               name="nombre"
               placeholder="nombre"
               value={nombre}
+              required
               onChange={handleChangeNombre}
             />
           </Form.Group>

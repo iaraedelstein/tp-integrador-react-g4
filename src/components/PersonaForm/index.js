@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { createPersona } from '../../services/personService';
 import { useDispatch } from 'react-redux';
 
@@ -9,6 +9,7 @@ export default function PersonaForm(props) {
   const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
   const [alias, setAlias] = useState('');
+  const [error, setError] = useState('');
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -30,20 +31,25 @@ export default function PersonaForm(props) {
     setAlias(newAlias);
   };
 
-  const handleSubmit = async () => {
-    const persona = {
-      nombre: nombre,
-      apellido: apellido,
-      email: email,
-      alias: alias,
-    };
-    const personaCreated = await createPersona(persona);
-    dispatch({
-      type: 'ADD',
-      list: 'PERSONA',
-      detail: { persona: personaCreated },
-    });
-    props.history.push('/persona');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const persona = {
+        nombre: nombre,
+        apellido: apellido,
+        email: email,
+        alias: alias,
+      };
+      const personaCreated = await createPersona(persona);
+      dispatch({
+        type: 'ADD',
+        list: 'PERSONA',
+        detail: { persona: personaCreated },
+      });
+      props.history.push('/persona');
+    } catch (e) {
+      setError(e.response.data.mensaje || 'Error');
+    }
   };
 
   const handleCancel = () => {
@@ -57,6 +63,11 @@ export default function PersonaForm(props) {
           <h1 className="title">Nueva Persona</h1>
         </Col>
       </Row>
+      {error && (
+        <Alert variant="danger" onClose={() => setError('')} dismissible>
+          {error}
+        </Alert>
+      )}
       <Form className="container-new-form">
         <Form.Group className="input-form-group">
           <Form.Label>Nombre</Form.Label>
@@ -65,6 +76,7 @@ export default function PersonaForm(props) {
             name="nombre"
             placeholder="nombre"
             value={nombre}
+            required
             onChange={handleChangeNombre}
           />
         </Form.Group>
@@ -75,6 +87,7 @@ export default function PersonaForm(props) {
             name="apellido"
             placeholder="apellido"
             value={apellido}
+            required
             onChange={handleChangeApellido}
           />
         </Form.Group>
@@ -86,6 +99,7 @@ export default function PersonaForm(props) {
             name="alias"
             placeholder="alias"
             value={alias}
+            required
             onChange={handleChangeAlias}
           />
         </Form.Group>
@@ -96,6 +110,7 @@ export default function PersonaForm(props) {
             name="email"
             placeholder="email"
             value={email}
+            required
             onChange={handleChangeEmail}
           />
         </Form.Group>
