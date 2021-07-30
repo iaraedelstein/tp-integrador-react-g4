@@ -67,6 +67,13 @@
 
 .card-actions button {
   border: none;
+  background: none;
+}
+
+.card-actions__edit {
+  border: none;
+  color: #0d6efd;
+  background: none;
 }
 
 .card-actions__delete {
