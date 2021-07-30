@@ -11,6 +11,11 @@ export const getPersonas = async () => {
   }
 };
 
+export const getPersona = async (id) => {
+   const respuesta = await axios.get(`${baseUrl}/persona/${id}`);
+    return respuesta.data;
+ };
+
 export const createPersona = async (persona) => {
   try {
     const respuesta = await axios.post(`${baseUrl}/persona`, persona);
@@ -19,6 +24,11 @@ export const createPersona = async (persona) => {
     console.log(`Error creating person ${persona.nombre}`);
     return error;
   }
+};
+//METODO PARA UPDATE PERSONA
+export const updatePersona = async (id, persona) => {
+  const respuesta = await axios.put(`${baseUrl}/persona/${id}`, persona);
+  return respuesta.data;
 };
 
 export const deletePersona = async (id) => {
