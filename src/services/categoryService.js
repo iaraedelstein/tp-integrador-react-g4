@@ -29,14 +29,10 @@ export const deleteCategory = async (id) => {
 };
 
 export const updateCategory = async (id, name) => {
-  try {
-    const respuesta = await axios.put(`${baseUrl}/categoria/${id}`, {
-      nombre: name,
-    });
-    return respuesta.data;
-  } catch (e) {
-    console.log(`Error updating category ${id}`);
-  }
+  const respuesta = await axios.put(`${baseUrl}/categoria/${id}`, {
+    nombre: name,
+  });
+  return respuesta.data;
 };
 
 export const getLibrosByCategory = async (id) => {
@@ -45,5 +41,6 @@ export const getLibrosByCategory = async (id) => {
     return respuesta.data;
   } catch (e) {
     console.log(`Error getting libros for category ${id}`);
+    return [];
   }
 };

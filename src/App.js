@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/Home';
 import PersonaList from './components/PersonaList';
 import PersonaForm from './components/PersonaForm';
-/*import PersonaLibros from './components/PersonaLibros'; */
 import CategoriaList from './components/CategoriaList';
 import CategoriaForm from './components/CategoriaForm';
 import LibrosList from './components/LibrosList';

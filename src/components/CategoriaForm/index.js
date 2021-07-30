@@ -1,34 +1,17 @@
-import { useState, useEffect } from 'react';
-import {
-  createCategory,
-  updateCategory,
-  getCategory,
-} from '../../services/categoryService';
+import { useState } from 'react';
+import { createCategory, updateCategory } from '../../services/categoryService';
 import Button from 'react-bootstrap/Button';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Modal, Form, Alert } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 
-export default function CategoriaForm(props) {
+export default function CategoriaForm({
+  category,
+  handleCloseModal,
+  showModal,
+}) {
   const dispatch = useDispatch();
-  const id = props.match.params.id
-    ? parseInt(props.match.params.id)
-    : undefined;
-  const [nombre, setNombre] = useState('');
-
-  useEffect(() => {
-    async function fetchData() {
-      if (id !== undefined) {
-        try {
-          const category = await getCategory(id);
-          setNombre(category.nombre);
-        } catch (e) {
-          //ERROR SHOW
-          console.log(`Error getting category ${id}`);
-        }
-      }
-    }
-    fetchData();
-  }, [id]);
+  const [nombre, setNombre] = useState(category ? category.nombre : '');
+  const [error, setError] = useState('');
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -36,14 +19,14 @@ export default function CategoriaForm(props) {
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      event.preventDefault();
-      if (id !== undefined) {
-        await updateCategory(id, nombre);
+      if (category) {
+        await updateCategory(category.id, nombre);
         dispatch({
           type: 'UPDATE',
           list: 'CATEGORIA',
-          detail: { id, nombre },
+          detail: { id: category.id, nombre },
         });
       } else {
         const catNew = await createCategory(nombre);
@@ -53,43 +36,53 @@ export default function CategoriaForm(props) {
           detail: { categoria: catNew },
         });
       }
-      props.history.push('/categoria');
+      handleCloseModal();
     } catch (e) {
+      setError(e.response.data.mensaje || 'Error');
       console.log(`Error updating category ${nombre}`);
     }
   };
 
   return (
-    <Container className="categories">
-      <Row>
-        <Col>
-          <h1 className="title">
-            {id !== undefined ? 'Editar Categoría' : 'Nueva Categoría'}
-          </h1>
-        </Col>
-      </Row>
-
-      <Form>
-        <Row className="align-items-end">
-          <Col xs="auto">
-            <Form.Group>
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                name="nombre"
-                placeholder="nombre"
-                value={nombre}
-                onChange={handleChangeNombre}
-              />
-            </Form.Group>
-          </Col>
-          <Col xs="auto">
-            <Button type="submit" onClick={handleSubmit}>
-              Guardar
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+    <Modal
+      show={showModal}
+      onHide={handleCloseModal}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header>
+        <Modal.Title>
+          {category ? 'Editar Categoría' : 'Nueva Categoría'}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {error && (
+          <Alert variant="danger" onClose={() => setError('')} dismissible>
+            {error}
+          </Alert>
+        )}
+        <Form>
+          <Form.Group>
+            <Form.Label>Nombre</Form.Label>
+            <Form.Control
+              type="text"
+              name="nombre"
+              placeholder="nombre"
+              value={nombre}
+              required
+              onChange={handleChangeNombre}
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          Guardar
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
