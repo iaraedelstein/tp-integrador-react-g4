@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
-import { createPersona } from '../../services/personService';
+import {
+  createPersona,
+  getPersona,
+  updatePersona,
+} from '../../services/personService';
 import { useDispatch } from 'react-redux';
 
 export default function PersonaForm(props) {
   const dispatch = useDispatch();
+  const id = props.match.params.id ? parseInt(props.match.params.id) : null;
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
   const [alias, setAlias] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function fetchData() {
+      if (id !== null) {
+        try {
+          const persona = await getPersona(id);
+          setNombre(persona.nombre);
+          setApellido(persona.apellido);
+          setAlias(persona.alias);
+          setEmail(persona.email);
+        } catch (e) {
+          //ERROR SHOW
+          console.log(`Error getting persona ${id}`);
+        }
+      }
+    }
+    fetchData();
+  }, [id]);
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -37,18 +60,28 @@ export default function PersonaForm(props) {
       const persona = {
         nombre: nombre,
         apellido: apellido,
-        email: email,
         alias: alias,
+        email: email,
       };
-      const personaCreated = await createPersona(persona);
-      dispatch({
-        type: 'ADD',
-        list: 'PERSONA',
-        detail: { persona: personaCreated },
-      });
+      if (id !== null) {
+        const personaUpdated = await updatePersona(id, persona);
+        dispatch({
+          type: 'UPDATE',
+          list: 'PERSONA',
+          detail: { id, persona: personaUpdated },
+        });
+      } else {
+        const personaCreated = await createPersona(persona);
+        dispatch({
+          type: 'ADD',
+          list: 'PERSONA',
+          detail: { persona: personaCreated },
+        });
+      }
       props.history.push('/persona');
     } catch (e) {
       setError(e.response.data.mensaje || 'Error');
+      console.log(`Error updating persona ${nombre}`);
     }
   };
 
@@ -59,9 +92,7 @@ export default function PersonaForm(props) {
   return (
     <Container className="container-new">
       <Row>
-        <Col>
-          <h1 className="title">Nueva Persona</h1>
-        </Col>
+        <Col>{id !== null ? 'Editar Persona' : 'Nueva Persona'}</Col>
       </Row>
       {error && (
         <Alert variant="danger" onClose={() => setError('')} dismissible>
@@ -74,7 +105,7 @@ export default function PersonaForm(props) {
           <Form.Control
             type="text"
             name="nombre"
-            placeholder="nombre"
+            placeholder="nombre placeholder"
             value={nombre}
             required
             onChange={handleChangeNombre}
@@ -112,6 +143,7 @@ export default function PersonaForm(props) {
             value={email}
             required
             onChange={handleChangeEmail}
+            disabled={id !== null}
           />
         </Form.Group>
 

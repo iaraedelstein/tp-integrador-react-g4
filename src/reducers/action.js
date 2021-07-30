@@ -47,6 +47,12 @@ export default function reducer(state = estadoInicial, { type, list, detail }) {
           (p) => p.id !== detail.id
         );
         return nuevoState;
+        case 'UPDATE':
+        const perToUpdate = nuevoState.personas.find(
+          (p) => p.id === detail.id
+        );
+        perToUpdate.alias = detail.alias;
+        return nuevoState;
       default:
         nuevoState.personas = [];
         return nuevoState;
