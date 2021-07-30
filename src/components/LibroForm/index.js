@@ -98,7 +98,11 @@ export default function LibroForm(props) {
   return (
     <Container className="container-new">
       <Row>
-        <Col>{id !== null ? 'Editar Libro' : 'Nuevo Libro'}</Col>
+        <Col>
+          <h1 className="title">
+            {id !== null ? 'Editar Libro' : 'Nuevo Libro'}
+          </h1>
+        </Col>
       </Row>
 
       <Form className="container-new-form">

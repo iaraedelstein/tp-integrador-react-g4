@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Modal,
-  Row,
-} from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {
   deleteLibro,
@@ -16,6 +8,7 @@ import {
 } from '../../services/libroService';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import LibroPrestarModal from '../LibroPrestarModal';
 
 export default function LibroList(props) {
   const dispatch = useDispatch();
@@ -53,6 +46,11 @@ export default function LibroList(props) {
     setPersonaId(persona);
   };
 
+  const handleButtonPrestar = (libro) => {
+    setLibro(libro);
+    setShowModal(true);
+  };
+
   const handlePrestarLibro = async (e) => {
     e.preventDefault();
     try {
@@ -85,12 +83,6 @@ export default function LibroList(props) {
       })
     );
   }, [libros, categorias, personas]);
-
-  useEffect(() => {
-    if (libro) {
-      setShowModal(true);
-    }
-  }, [libro]);
 
   useEffect(() => {
     if (!showModal) {
@@ -158,7 +150,7 @@ export default function LibroList(props) {
                       <Button
                         variant="success"
                         onClick={() => {
-                          setLibro(libro);
+                          handleButtonPrestar(libro);
                         }}
                       >
                         Prestar
@@ -171,52 +163,14 @@ export default function LibroList(props) {
           })}
         </div>
       </Container>
-
-      {showModal && libro && (
-        <Modal.Dialog>
-          <Modal.Header>
-            <Modal.Title>Prestar: {libro.nombre}</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-            <p>Seleccionar la persona que solicita el libro.</p>
-            {
-              <Form className="container-new-form">
-                <Form.Group
-                  className="input-form-group"
-                  controlId="formGridPerson"
-                >
-                  <Form.Label>Persona</Form.Label>
-                  <Form.Select
-                    defaultValue="Seleccionar..."
-                    onChange={handleChangePersona}
-                  >
-                    <option>Seleccionar...</option>
-                    {personas.length > 0 &&
-                      personas.map((persona) => {
-                        return (
-                          <option
-                            value={persona.id}
-                          >{`${persona.nombre} ${persona.apellido} (${persona.email})`}</option>
-                        );
-                      })}
-                  </Form.Select>
-                </Form.Group>
-                <div className="btn-form-actions">
-                  <Button type="submit" onClick={handlePrestarLibro}>
-                    Guardar
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cancelar
-                  </Button>
-                </div>
-              </Form>
-            }
-          </Modal.Body>
-        </Modal.Dialog>
+      {libro && (
+        <LibroPrestarModal
+          personas={personas}
+          showModal={showModal}
+          libro={libro}
+          handleChangePersona={handleChangePersona}
+          handlePrestarLibro={handlePrestarLibro}
+        />
       )}
     </>
   );
