@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { deleteCategory } from '../../services/categoryService';
 import CategoriaLibros from '../CategoriaLibros';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import './styles.css';
+import CategoriaForm from '../CategoriaForm';
 
 export default function CategoriaList(props) {
   const dispatch = useDispatch();
   const categorias = useSelector((state) => state.categorias);
   const [category, setCategory] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [showCategoryBooks, setShowCategoryBooks] = useState(false);
 
   const handleDeleteCategory = async (id) => {
     try {
@@ -22,6 +24,28 @@ export default function CategoriaList(props) {
     }
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setShowCategoryBooks(false);
+    setCategory(null);
+  };
+
+  const handleEditCategory = async (cat) => {
+    setCategory(cat);
+    setShowModal(true);
+  };
+
+  const handlNewCategory = async (e) => {
+    e.preventDefault();
+    setCategory(null);
+    setShowModal(true);
+  };
+
+  const handleCategoryBooks = async (cat) => {
+    setCategory(cat);
+    setShowCategoryBooks(true);
+  };
+
   return (
     <Container className="categories">
       <Row>
@@ -31,9 +55,9 @@ export default function CategoriaList(props) {
       </Row>
       <Row>
         <div className="btn-end">
-          <Link to={'/categoria/new'} className="btn btn-secondary">
+          <Button variant="secondary" onClick={handlNewCategory}>
             Nueva Categoría
-          </Link>
+          </Button>
         </div>
       </Row>
 
@@ -43,17 +67,14 @@ export default function CategoriaList(props) {
             <div className="category-wrapper" key={cat.id}>
               <button
                 className="category-info"
-                onClick={() => setCategory(cat.id)}
+                onClick={() => handleCategoryBooks(cat)}
               >
                 {cat.nombre}
               </button>
               <div className="card-actions">
-                <Link
-                  className="link"
-                  to={`/categoria/${cat.id.toString()}/edit`}
-                >
+                <button onClick={() => handleEditCategory(cat)}>
                   <FaPencilAlt></FaPencilAlt>
-                </Link>
+                </button>
                 <button
                   className="card-actions__delete"
                   onClick={() => handleDeleteCategory(cat.id)}
@@ -64,7 +85,14 @@ export default function CategoriaList(props) {
             </div>
           );
         })}
-        {category && <CategoriaLibros id={category} />}
+        {showModal && (
+          <CategoriaForm
+            category={category}
+            handleCloseModal={handleCloseModal}
+            showModal={showModal}
+          />
+        )}
+        {category && showCategoryBooks && <CategoriaLibros id={category.id} />}
       </div>
     </Container>
   );
