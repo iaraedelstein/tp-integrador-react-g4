@@ -1,19 +1,43 @@
 import { useState, useEffect } from 'react';
-import { createLibro } from '../../services/libroService';
 import Button from 'react-bootstrap/Button';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import {
+  getLibro,
+  createLibro,
+  updateLibro,
+} from '../../services/libroService';
+import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function LibroForm(props) {
   const dispatch = useDispatch();
+  const id = props.match.params.id ? parseInt(props.match.params.id) : null;
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [categoria, setCategoria] = useState('');
   const [persona, setPersona] = useState('');
   const categorias = useSelector((state) => state.categorias);
   const personas = useSelector((state) => state.personas);
+  const [error, setError] = useState('');
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    async function fetchData() {
+      if (id !== null) {
+        try {
+          const libro = await getLibro('sss');
+          setNombre(libro.nombre);
+          setDescripcion(libro.descripcion);
+          if (libro.persona_id) {
+            setPersona(libro.persona_id);
+          }
+          setCategoria(libro.categoria_id);
+        } catch (e) {
+          setError(`Error getting libro ${id}`);
+          console.log(`Error getting libro ${id}`);
+        }
+      }
+    }
+    fetchData();
+  }, [id]);
 
   const handleChangeNombre = (e) => {
     const newNombre = e.target.value;
@@ -27,14 +51,12 @@ export default function LibroForm(props) {
 
   const handleChangePersona = (e) => {
     const persona = e.target.value;
-    console.log(persona);
-    setPersona(persona);
+    setPersona(parseInt(persona));
   };
 
   const handleChangeCategoria = (e) => {
     const categoria = e.target.value;
-    console.log(categoria);
-    setCategoria(categoria);
+    setCategoria(parseInt(categoria));
   };
 
   const handleSubmit = async (e) => {
@@ -44,14 +66,29 @@ export default function LibroForm(props) {
         nombre: nombre,
         descripcion: descripcion,
         categoria_id: categoria,
-        persona_id: persona,
       };
-      const libroCreated = await createLibro(libro);
-      dispatch({ type: 'ADD', list: 'LIBRO', detail: { libro: libroCreated } });
+      if (persona) {
+        libro.persona_id = persona;
+      }
+      if (id !== null) {
+        const libroUpdated = await updateLibro(id, libro);
+        dispatch({
+          type: 'UPDATE',
+          list: 'LIBRO',
+          detail: { id, libro: libroUpdated },
+        });
+      } else {
+        const libroCreated = await createLibro(libro);
+        dispatch({
+          type: 'ADD',
+          list: 'LIBRO',
+          detail: { libro: libroCreated },
+        });
+      }
       props.history.push('/libro');
     } catch (e) {
-      //todo informar al usuario
-      console.log(`Error creating libro ${nombre}`);
+      setError(e.response.data.mensaje || 'Error');
+      console.log(`Error updating libro ${nombre}`);
     }
   };
 
@@ -61,12 +98,18 @@ export default function LibroForm(props) {
 
   return (
     <Container className="container-new">
+      {error && (
+        <Alert variant="danger" onClose={() => setError('')} dismissible>
+          {error}
+        </Alert>
+      )}
       <Row>
         <Col>
-          <h1 className="title">Nuevo Libro</h1>
+          <h1 className="title">
+            {id !== null ? 'Editar Libro' : 'Nuevo Libro'}
+          </h1>
         </Col>
       </Row>
-
       <Form className="container-new-form">
         <Form.Group className="input-form-group">
           <Form.Label>Nombre</Form.Label>
@@ -76,6 +119,8 @@ export default function LibroForm(props) {
             placeholder="nombre"
             value={nombre}
             onChange={handleChangeNombre}
+            disabled={id !== null}
+            required
           />
         </Form.Group>
         <Form.Group className="input-form-group">
@@ -93,6 +138,9 @@ export default function LibroForm(props) {
           <Form.Select
             defaultValue="Seleccionar..."
             onChange={handleChangeCategoria}
+            value={categoria}
+            disabled={id !== null}
+            required
           >
             <option>Seleccionar...</option>
             {categorias.length > 0 &&
@@ -106,11 +154,17 @@ export default function LibroForm(props) {
           <Form.Select
             defaultValue="Seleccionar..."
             onChange={handleChangePersona}
+            value={persona}
+            disabled={id !== null}
           >
             <option>Seleccionar...</option>
             {personas.length > 0 &&
-              personas.map((persona) => {
-                return <option value={persona.id}>{persona.nombre}</option>;
+              personas.map((p) => {
+                return (
+                  <option
+                    value={p.id}
+                  >{`${p.nombre} ${p.apellido} (${p.email})`}</option>
+                );
               })}
           </Form.Select>
         </Form.Group>

@@ -23,6 +23,12 @@ export default function reducer(state = estadoInicial, { type, list, detail }) {
           (cat) => cat.id !== detail.id
         );
         return nuevoState;
+      case 'UPDATE':
+        const catToUpdate = nuevoState.categorias.find(
+          (c) => c.id === detail.id
+        );
+        catToUpdate.nombre = detail.nombre;
+        return nuevoState;
       default:
         nuevoState.categorias = [];
         return nuevoState;
@@ -56,6 +62,18 @@ export default function reducer(state = estadoInicial, { type, list, detail }) {
         return nuevoState;
       case 'DELETE':
         nuevoState.libros = nuevoState.libros.filter((l) => l.id !== detail.id);
+        return nuevoState;
+      case 'RETURN':
+        const bookToReturn = nuevoState.libros.find((l) => l.id === detail.id);
+        bookToReturn.persona_id = null;
+        return nuevoState;
+      case 'ASSIGN':
+        const bookToAssign = nuevoState.libros.find((l) => l.id === detail.id);
+        bookToAssign.persona_id = parseInt(detail.persona_id);
+        return nuevoState;
+      case 'UPDATE':
+        const bookToUpdate = nuevoState.libros.find((l) => l.id === detail.id);
+        bookToUpdate.descripcion = detail.libro.descripcion;
         return nuevoState;
       default:
         nuevoState.libros = [];

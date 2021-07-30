@@ -12,13 +12,8 @@ export const getPersonas = async () => {
 };
 
 export const createPersona = async (persona) => {
-  try {
-    const respuesta = await axios.post(`${baseUrl}/persona`, persona);
-    return respuesta.data;
-  } catch (error) {
-    console.log(`Error creating person ${persona.nombre}`);
-    return error;
-  }
+  const respuesta = await axios.post(`${baseUrl}/persona`, persona);
+  return respuesta.data;
 };
 
 export const deletePersona = async (id) => {

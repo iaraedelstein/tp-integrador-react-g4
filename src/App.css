@@ -45,13 +45,34 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
+}
+
+.categories .container-list__list {
+  justify-content: space-around;
+}
+
+.card-body-containter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.card-actions button {
+  border: none;
+}
+
+.card-actions__edit {
+  border: none;
+  color: #0d6efd;
+  background: none;
 }
 
 .card-actions__delete {

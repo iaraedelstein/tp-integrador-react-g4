@@ -21,17 +21,26 @@ export const createLibro = async (libro) => {
   return respuesta.data;
 };
 
+export const updateLibro = async (id, libro) => {
+  const respuesta = await axios.put(`${baseUrl}/libro/${id}`, libro);
+  return respuesta.data;
+};
+
 export const deleteLibro = async (id) => {
   const respuesta = await axios.delete(`${baseUrl}/libro/${id}`);
   return respuesta.data;
 };
 
-export const prestarLibro = async (id) => {
-  const respuesta = await axios.delete(`${baseUrl}/libro/prestar/${id}`);
+export const prestarLibro = async (id, persona_id) => {
+  const body = {
+    id,
+    persona_id,
+  };
+  const respuesta = await axios.put(`${baseUrl}/libro/prestar/${id}`, body);
   return respuesta.data;
 };
 
 export const devolverLibro = async (id) => {
-  const respuesta = await axios.delete(`${baseUrl}/libro/devolver/${id}`);
+  const respuesta = await axios.put(`${baseUrl}/libro/devolver/${id}`);
   return respuesta.data;
 };
